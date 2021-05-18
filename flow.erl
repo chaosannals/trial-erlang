@@ -23,11 +23,14 @@ quicksort([Pivot|T]) ->
     quicksort([X || X <- T, X >= Pivot]).
 
 % TODO
-quicksort2([Pivot|T]) -> quicksort2i(Pivot, T, [], []).
+quicksort2([Pivot|T]) -> 
+    {L, B} = quicksort2i(Pivot, T, [], []),
+    quicksort(L) ++ [Pivot] ++ quicksort(B).
 quicksort2i(Pivot, [H|T], L, B) ->
     if  H < Pivot -> quicksort2i(Pivot, T, [H, L], B);
         H >= Pivot -> quicksort2i(Pivot, T, L, [H, B])
-    end.
+    end;
+quicksort2i(_, [], L, B) -> {L, B}.
 
 pythag(N) -> [
     {A, B, C} ||
